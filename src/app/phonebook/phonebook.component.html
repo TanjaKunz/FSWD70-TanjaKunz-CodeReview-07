@@ -1,0 +1,26 @@
+<div class="container-fluid my-5 pt-4" id="wrap">
+  <div class="row mb-5">
+    <div class="col-md-6 col-sm-12 m-0 mb-sm-3 d-inline h3">Contacts</div>
+    <form class="col-md-6 col-sm-12 m-0 form-inline">
+        <input name="searchInput" class="form-control mr-1" placeholder="Filter by Name" #searchInput="ngModel"  [(ngModel)]="searchText" style="width: 80%;">
+        <button class="btn delete"  (click)="searchText=''"><i class="fas fa-times"></i></button>
+    </form>
+  </div>
+  <div class="row border-bottom" id="headline">
+    <div class="col-12 col-md-3 d-none d-md-block h5 thead">Name</div>
+    <div class="col-12 col-md-3 col-md-3 d-none d-md-block h5 thead">Mobile</div>
+    <div class="col-12 col-md-3 col-md-4 d-none d-md-block col-sm-6 h5 thead">Email</div>
+  </div>
+  <ng-container *ngFor="let contact of contactsArray">
+    <div class="row border-bottom py-3" *ngIf="filterCondition(contact)">
+      <div class="col-12 col-md-3 my-auto h5 name">{{contact.firstName}} {{contact.lastName}}</div>
+      <div class="col-12 col-md-3 my-auto mobile">{{contact.mobile}}</div>
+      <div class="col-12 col-md-3 my-auto contact">{{contact.email}}</div>
+      <div>
+        <button class="btn edit" (click)="contactsService.populateForm(contact)"><i class="fas fa-pencil-alt"></i></button>
+        <button class="btn delete" (click)="onDelete(contact.$key)"><i class="fas fa-times"></i></button>
+      </div>
+    </div>
+  </ng-container>
+  <div class="alert alert-danger mt-3" *ngIf="showDeletedMessage">Deleted successfully</div>
+</div>
